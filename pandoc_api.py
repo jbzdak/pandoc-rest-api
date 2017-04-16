@@ -62,7 +62,7 @@ def convert(in_format, out_format):
     if out_format not in ACCEPTED_OUTPUT_FORMATS:
         return "Invalid output format", 404
 
-    tempdir = pathlib.Path(tempfile.mkdtemp(prefix="/app/"))
+    tempdir = pathlib.Path(tempfile.mkdtemp(prefix=""))
 
     out_extension = OUTPUT_FILE_EXTENSION_MAPPING.get(out_format, out_format)
     in_extension = IN_EXTENSIONS.get(in_format, "")
@@ -77,7 +77,7 @@ def convert(in_format, out_format):
         subprocess.check_call(command, cwd=str(tempdir))
         result = io.BytesIO(out.read_bytes())
     finally:
-        # shutil.rmtree(str(tempdir))
+        shutil.rmtree(str(tempdir))
         pass
 
     return send_file(result, attachment_filename=str(out.stem)), 200
