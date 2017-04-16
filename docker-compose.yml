@@ -5,7 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: python pandoc_api.py
+    environment:
+      - FLASK_APP=pandoc_api.py
+      - FLASK_DEBUG=1
+    command: flask run --host 0.0.0.0 --port 5000
+
     ports:
       - "5000:5000"
     volumes:
