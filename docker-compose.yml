@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python pandoc_api.py
+    ports:
+      - "5000:5000"
+    volumes:
+      - ".:/app"

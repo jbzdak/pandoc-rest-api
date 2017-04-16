@@ -1,0 +1,4 @@
+Flask
+pip-tools
+pudb
+uwsgi
