@@ -55,7 +55,7 @@ OUTPUT_FILE_EXTENSION_MAPPING = {
 }
 
 
-@app.route("/convert/<in_format>/<out_format>", methods=['POST'])
+@app.route("/v0/convert/<in_format>/<out_format>", methods=['POST'])
 def convert(in_format, out_format):
     if in_format not in ACCEPTED_INPUT_FORMATS:
         return "Invalid infile format", 404
