@@ -4,7 +4,7 @@ import subprocess
 import io
 import tempfile
 
-from flask import Flask, request
+from flask import Flask, request, after_this_request
 from flask.helpers import send_file
 from pip._vendor.distlib._backport import shutil
 
@@ -75,11 +75,14 @@ def convert(in_format, out_format):
         out = tempdir / "{}.{}".format("outfile", out_extension)
         command = ['pandoc', '-f', in_format, '-t', out_format, "-o", out, infile]
         subprocess.check_call(command, cwd=str(tempdir))
-        result = io.BytesIO(out.read_bytes())
-    finally:
-        shutil.rmtree(str(tempdir))
-        pass
+    except:
+        shutil.rmtree(tempdir)
 
-    return send_file(result, attachment_filename=str(out.stem)), 200
+    @after_this_request
+    def remove_files(response):
+        shutil.rmtree(tempdir)
+        return response
+
+    return send_file(str(out), attachment_filename=str(out.stem)), 200
 
 
