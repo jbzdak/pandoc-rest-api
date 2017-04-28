@@ -75,6 +75,7 @@ def convert(in_format, out_format):
         out = tempdir / "{}.{}".format("outfile", out_extension)
         command = ['pandoc', '-f', in_format, '-t', out_format, "-o", out, infile]
         subprocess.check_call(command, cwd=str(tempdir))
+
     except:
         shutil.rmtree(tempdir)
 
