@@ -1,0 +1,11 @@
+# NOTE: This is docker compose for DEVELOPEMENT
+version: '2'
+
+services:
+  webserver:
+    image: jbzdak/pandoc-rest-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
